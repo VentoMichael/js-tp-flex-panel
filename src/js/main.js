@@ -1,34 +1,22 @@
-// (function panel() {
-//    const PanelInit = {
-//      init(){
-//         document.documentElement.classList.add('js-enabled');
-//         this.panel = document.querySelectorAll('.open');
-//         PanelInit.addEventListeners();
-//      },
-//      addEventListeners(){
-//          document.this.panel.addEventListener('click', ()=>{
-//              for (let i = 0; i < this.panel.length;i++){
-//                      this.panel.classList.add('open')
-//              }
-//          })
-//      }
-//    };
-//     PanelInit.init();
-// }());
-
-
-document.documentElement.classList.add('js-enabled');
-let panel = document.querySelectorAll('.panel');
-
-for (let i = 0; i < panel.length; i++){
-        panel[i].addEventListener('click',()=>{
-        if (panel[i].classList.contains('open')){
-            panel[i].classList.remove('open');
-        }else{
-                panel[i].classList.add('open');
+(function panel() {
+    const PanelShow = {
+        init() {
+            document.documentElement.classList.add('js-enabled');
+            this.panels = document.querySelectorAll('.panel');
+            this.addEventListeners();
+        },
+        addEventListeners() {
+            function toggleOpen() {
+                this.classList.toggle('open');
             }
-        })
-    }
-
-
-
+            function toggleActive(e) {
+                if (e.propertyName.includes('flex')) {
+                    this.classList.toggle('open-active');
+                }
+            }
+            this.panels.forEach(panel => panel.addEventListener('click', toggleOpen));
+            this.panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
+        }
+    };
+    PanelShow.init();
+})();
